@@ -18,16 +18,18 @@ const botaoAbrirMenu = document.querySelector('.openMenu')
 const menuTempoAvancar = document.querySelectorAll('.menu')
 let segundosParaAvancar = 30
 
+let mouseAtivo = true
+
 
 const duracao = document.querySelector('.tempoVideo')
 
 butao.onclick = e => {
     if(video.paused){
         video.play()
-        butao.src = '../PlayerVideo/imgs/pause.png'
+        butao.src = '../PlayerVideoWeb/imgs/pause.png'
     } else {
         video.pause()
-        butao.src = '../PlayerVideo/imgs/play.png'
+        butao.src = '../PlayerVideoWeb/imgs/play.png'
     }
 }
 botaoMais10.onclick = e => video.currentTime += segundosParaAvancar
@@ -57,6 +59,16 @@ menuTempoAvancar.forEach( h => {
     }
 })
 
+corpoVideo.onmouseleave = e => {
+    mouseAtivo = false
+    // console.log('saiu')
+}
+
+corpoVideo.onmouseenter = e => {
+    mouseAtivo = true
+    // console.log('entrou')
+}
+
 
 barraCompleta.onmouseleave = e => {
     barraMouse.style.display = 'none'
@@ -77,8 +89,29 @@ function formatarSegundos (i) {
     return tempoFormatado
 }
 
+function displayGeral(display) {
+    butao.style.display = display
+    botaoMais10.style.display = display
+    botaoMenos10.style.display = display
+    botaoAbrirMenu.style.display = display
+    menuTempoAvancar.forEach( e =>{ 
+        e.style.display = display==='none' ? display : e.style.display
+    })
+}
+
 
 function atualizacaoStatus() {
+    if(!mouseAtivo){
+        setTimeout(()=>{
+            if(!mouseAtivo){
+                displayGeral('none')
+            } 
+        },1000)
+    } else {
+        displayGeral('block')
+    }
+
+
     
     barraCompleta.addEventListener('mousemove' , (event) => {
         const posicaoMouseTela = event.layerX 
