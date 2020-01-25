@@ -94,9 +94,16 @@ function displayGeral(display) {
     botaoMais10.style.display = display
     botaoMenos10.style.display = display
     botaoAbrirMenu.style.display = display
+    duracao.style.display = display
     menuTempoAvancar.forEach( e =>{ 
         e.style.display = display==='none' ? display : e.style.display
     })
+
+    if(display === 'none'){
+        barraCompleta.style.height = '2%'
+    } else {
+        barraCompleta.style.height = '5%'
+    }
 }
 
 
